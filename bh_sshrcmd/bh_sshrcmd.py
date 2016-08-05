@@ -1,4 +1,4 @@
-import threading
+﻿import threading
 import paramiko
 import subprocess
 
@@ -11,7 +11,8 @@ def ssh_command(ip, user, passwd, command):
     ssh_session = client.get_transport().open_session()
 
     if ssh_session.active:
-        ssh_session.exec_command(command)
+        #ssh_session.exec_command(command)  # <- exec command breaks, use send when using with ssh_server
+        ssh_session.send(command)
         print ssh_session.recv(1024)
 
         while True:
@@ -29,4 +30,5 @@ def ssh_command(ip, user, passwd, command):
     return
 
 
-ssh_command('10.1.10.153', 'dholland', 'default', 'id')
+#ssh_command('10.1.10.153', 'dholland', 'default', 'id')
+ssh_command('172.19.248.159', 'dholland', 'default', 'dir')
